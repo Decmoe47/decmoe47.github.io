@@ -98,12 +98,9 @@ navbar:
         About: /about/
     # Links to be shown on the right of the navigation bar
     links:
-        Discuss on GitHub:
-            icon: fas fa-comments
-            url: 'https://github.com/ppoffice/hexo-theme-icarus/discussions'
-        Download on GitHub:
+        GitHub:
             icon: fab fa-github
-            url: 'https://github.com/ppoffice/hexo-theme-icarus'
+            url: 'https://github.com/Decmoe47/decmoe47.github.io'
 # Page footer configurations
 footer:
     # Links to be shown on the right of the footer section
@@ -111,12 +108,9 @@ footer:
         Creative Commons:
             icon: fab fa-creative-commons
             url: 'https://creativecommons.org/'
-        Discuss on GitHub:
-            icon: fas fa-comments
-            url: 'https://github.com/ppoffice/hexo-theme-icarus/discussions'
-        Download on GitHub:
+        GitHub:
             icon: fab fa-github
-            url: 'https://github.com/ppoffice/hexo-theme-icarus'
+            url: 'https://github.com/Decmoe47/decmoe47.github.io'
 # Article related configurations
 article:
     # Code highlight settings
@@ -179,10 +173,10 @@ search:
 #         qrcode: ''
 # Share plugin configurations
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Share/
-share:
-    type: sharethis
-    # URL to the ShareThis share plugin script
-    install_url: //platform-api.sharethis.com/js/sharethis.js#property=5ab6f60ace89f00013641890&product=inline-share-buttons
+# share:
+#     type: sharethis
+#     # URL to the ShareThis share plugin script
+#     install_url: //platform-api.sharethis.com/js/sharethis.js#property=5ab6f60ace89f00013641890&product=inline-share-buttons
 # Sidebar configurations.
 # Please be noted that a sidebar is only visible when it has at least one widget
 sidebar:
@@ -193,7 +187,7 @@ sidebar:
     # Right sidebar configurations
     right:
         # Whether the sidebar sticks to the top when page scrolls
-        sticky: false
+        sticky: true
 # Sidebar widget configurations
 # http://ppoffice.github.io/hexo-theme-icarus/categories/Widgets/
 widgets:
