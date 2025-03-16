@@ -1,6 +1,7 @@
 ---
-categories: 
+categories:
   - [编程, TypeScript, ts-node]
+title: ts-node无法使用非相对路径导入
 ---
 
 需要：

@@ -1,6 +1,7 @@
 ---
-categories: 
+categories:
   - [编程, Go]
+title: go缓解连续多个iferr的一个办法
 ---
 
 开门见上，直接上代码：

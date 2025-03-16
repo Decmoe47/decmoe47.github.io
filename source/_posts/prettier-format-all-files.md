@@ -1,6 +1,7 @@
 ---
-categories: 
+categories:
   - [编程, TypeScript]
+title: prettier格式化所有文件
 ---
 
 ```shell

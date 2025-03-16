@@ -1,6 +1,8 @@
 ---
-categories: 
-  - [编程, nodejs, Winston]
+categories:
+  - [编程, nodejs]
+  - [编程, Winston]
+title: Winston无法在vscode打印
 ---
 
 如果`launch.json`设置的是

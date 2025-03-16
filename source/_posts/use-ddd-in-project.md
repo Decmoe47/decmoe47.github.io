@@ -1,6 +1,8 @@
 ---
-categories: 
+categories:
   - [编程]
+title: 使用DDD模式的项目分层
+date: 2025-03-16 22:10:27
 ---
 
 ```

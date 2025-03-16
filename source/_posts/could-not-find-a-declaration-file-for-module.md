@@ -1,6 +1,7 @@
 ---
-categories: 
+categories:
   - [编程, TypeScript, ts-node]
+title: Typescript使用ts-node报错Could not find a declaration file for module
 ---
 
 ts要用js的第三方modules时，会提示你Could not find a declaration file for module，然后让你install `@types/对应的模块名`，或者自己写.d.ts文件。后者的话，随便在哪新建个`xxx.d.ts`文件，xxx自己取。然后文件里写上：

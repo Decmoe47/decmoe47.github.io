@@ -1,6 +1,7 @@
 ---
-categories: 
+categories:
   - [编程, Go]
+title: go判断struct实例是不是哪个具体的struct
 ---
 
 ```go

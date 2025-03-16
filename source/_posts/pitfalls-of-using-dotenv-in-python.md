@@ -1,6 +1,7 @@
 ---
-categories: 
+categories:
   - [编程, Python]
+title: python使用dotenv的坑
 ---
 
 # 坑一：默认不会更新的配置项
