@@ -4,6 +4,8 @@ categories:
 title: go判断struct实例是不是哪个具体的struct
 ---
 
+代码示例：
+
 ```go
 // 注意`value`必须是值而不是指针！
 //

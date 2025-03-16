@@ -104,3 +104,9 @@ deploy:
   type: git
   repo: https://github.com/Decmoe47/decmoe47.github.io.git
   branch: main
+
+excerpt:
+  depth: 1
+  excerpt_excludes: []
+  more_excludes: []
+  hideWholePostExcerpts: true

@@ -5,6 +5,8 @@ categories:
 title: sqlalchemy自定义字段类型
 ---
 
+代码示例：
+
 ```python
 # base.py
 

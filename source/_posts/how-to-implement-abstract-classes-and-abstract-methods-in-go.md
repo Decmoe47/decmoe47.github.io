@@ -4,6 +4,8 @@ categories:
 title: go如何实现抽象类和抽象方法，父类方法调用子类实现的方法
 ---
 
+代码示例：
+
 ```go
 package main
 
