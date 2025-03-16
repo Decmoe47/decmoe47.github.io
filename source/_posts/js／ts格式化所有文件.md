@@ -1,0 +1,15 @@
+---
+categories: 
+  - [编程, TypeScript]
+---
+
+```shell
+npm i prettier
+npm i -D prettier-plugin-organize-imports
+```
+
+然后在package.json中写入：
+
+```json
+"pretty": "prettier --write \"./src/**/*.{ts,js,jsx,json}\"" 
+```
