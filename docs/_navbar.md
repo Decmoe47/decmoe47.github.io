@@ -1,0 +1,2 @@
+- [字幕组工作手册](/handbook/)
+- [音声译文存档](/voice-translation/)
