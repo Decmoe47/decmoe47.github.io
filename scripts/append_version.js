@@ -4,12 +4,8 @@ const cheerio = require('cheerio');
 
 // 获取全局版本号
 function getVersion() {
-  try {
-    const versionFile = path.join(__dirname, '../public/version.json');
-    return JSON.parse(fs.readFileSync(versionFile, 'utf8')).version;
-  } catch (e) {
-    return Date.now();
-  }
+  const versionFile = path.join(__dirname, '../public/version.json');
+  return JSON.parse(fs.readFileSync(versionFile, 'utf8')).version;
 }
 
 // 注册 HTML 过滤器
