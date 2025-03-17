@@ -219,7 +219,8 @@ body {
 /* 设置卡片高斯模糊 */
 .card {
     background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px) // 兼容 Safari
 }
 
 // 导航栏
@@ -245,6 +246,7 @@ body {
 @media screen and (max-width: 768px)
     .navbar-main
         backdrop-filter: blur(5px)
+        -webkit-backdrop-filter: blur(5px) // 兼容 Safari
 
 // 卡片圆角
 .card {
@@ -255,12 +257,14 @@ body {
 .footer {
     background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px) // 兼容 Safari
 }
 
 // 使右侧栏与导航栏保持距离
 .column.column-right.is-sticky {
   top: 5rem !important; 
 }
+
 
 /* 以下为扩宽卡片 */
 @media screen and (min-width: 1280px)  // 对应 Bulma 的 $widescreen
