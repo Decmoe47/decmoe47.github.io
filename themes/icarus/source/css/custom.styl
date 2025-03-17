@@ -1,0 +1,88 @@
+/* 设置全局背景图 */
+body {
+    background-image: url('/img/background.jpg') !important;
+    background-size: cover;
+    /* 图片覆盖整个页面 */
+    background-position: center;
+    /* 图片居中 */
+    background-repeat: no-repeat;
+    /* 不重复 */
+    background-attachment: fixed;
+    /* 固定背景（滚动时不移动） */
+}
+
+/* 设置卡片高斯模糊 */
+.card {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+// 导航栏
+.navbar {
+    position: fixed  // 固定在页面顶部
+    width: 100%
+    top: 0
+    z-index: 9999;  // 置顶
+    background: rgba(255, 255, 255, 0.8) // 白色半透明（深色主题可用 rgba(0,0,0,0.5)）
+    backdrop-filter: blur(10px) // 高斯模糊
+    -webkit-backdrop-filter: blur(10px) // 兼容 Safari
+}
+
+// 导航栏和卡片顶部之间留空
+.section
+    margin-top: 45px 
+
+.navbar-menu {
+    background-color: transparent
+}
+
+// 移动端减少模糊
+@media screen and (max-width: 768px)
+    .navbar-main
+        backdrop-filter: blur(5px)
+
+// 卡片圆角
+.card {
+    border-radius: 8px;
+}
+
+// 页脚高斯模糊
+.footer {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+/* 以下为扩宽卡片 */
+@media screen and (min-width: 1280px)  // 对应 Bulma 的 $widescreen
+  .container
+    max-width: 1280px !important  // 原值 $widescreen - 2*$gap
+    width: 1280px !important
+
+@media screen and (min-width: 1472px)  // 对应 Bulma 的 $fullhd
+  .container
+    max-width: 1472px !important  // 原值 $fullhd - 2*$gap
+    width: 1472px !important
+
+@media screen and (max-width: 768px) {
+    .is-4-desktop {
+        width: 20rem;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1439px) {
+    .column.is-4, .column.is-4-tablet, .is-4-desktop, .is-4-widescreen {
+        width: 20rem;
+    }
+    .column.is-8, .column.is-8-tablet, .is-8-desktop, .is-8-widescreen {
+        width: calc(100% - 20rem);
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .column.is-4, .column.is-4-tablet, .is-4-desktop, .is-4-widescreen {
+        width: 25rem;
+    }
+    .column.is-8, .column.is-8-tablet, .is-8-desktop, .is-8-widescreen {
+        width: calc(100% - 25rem);
+    }
+}
