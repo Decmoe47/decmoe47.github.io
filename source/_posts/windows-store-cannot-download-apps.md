@@ -1,7 +1,9 @@
 ---
-categories: 
-  - [应用程序, MicrosoftStore]
+categories:
+  - - 应用程序
+    - MicrosoftStore
 title: 解决windows store无法下载app
+abbrlink: 7d2eb228
 ---
 
 终端（管理员）里输入 `netsh winhttp import proxy source=ie` 。

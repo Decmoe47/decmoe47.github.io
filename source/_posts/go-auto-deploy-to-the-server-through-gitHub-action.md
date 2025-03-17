@@ -1,8 +1,11 @@
 ---
-categories: 
-  - [编程, Go]
-  - [编程, CICD]
+categories:
+  - - 编程
+    - Go
+  - - 编程
+    - CICD
 title: go通过github action自动部署到服务器
+abbrlink: daf4284d
 ---
 
 我的最终的配置文件 `deploy.yml` ，主要做了以下几件事：

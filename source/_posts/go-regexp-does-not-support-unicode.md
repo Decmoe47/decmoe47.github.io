@@ -1,7 +1,10 @@
 ---
 categories:
-  - [编程, Go, regexp]
+  - - 编程
+    - Go
+    - regexp
 title: go regexp不支持unicode
+abbrlink: bf8dd584
 ---
 
 ```go

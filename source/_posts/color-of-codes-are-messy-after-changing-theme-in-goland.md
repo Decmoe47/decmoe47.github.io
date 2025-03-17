@@ -1,8 +1,11 @@
 ---
-categories: 
-  - [编程, Go]
-  - [应用程序, GoLand]
+categories:
+  - - 编程
+    - Go
+  - - 应用程序
+    - GoLand
 title: 解决Goland换主题但代码看起来五颜六色太乱的问题
+abbrlink: 6dd17169
 ---
 
 ![](https://blog47.oss-cn-hangzhou.aliyuncs.com/img/20250317120421816.png)
