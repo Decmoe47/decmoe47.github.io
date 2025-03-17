@@ -140,7 +140,21 @@ search:
     index_pages: true
 # Comment plugin configurations
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Comment/
-# comment:
+comment:
+    type: giscus
+    repo: Decmoe47/decmoe47.github.io                   # 必填项
+    repoId: R_kgDOKkY7bA             # 必填项
+    category: Announcements          # 可选填，默认为 Announcements
+    categoryId: DIC_kwDOKkY7bM4CoIKV # 必填项
+    mapping: og:title                # 可选填，默认为 pathname
+    strict: true                    # 可选填
+    reactionsEnabled: true          # 可选填
+    emitMetadata: false              # 可选填
+    inputPosition: bottom               # 可选填，默认为 top
+    theme: noborder_light            # 可选填
+    lang: zh-CN                      # 可选填，默认为 en
+    lazy: true                       # 可选填，默认为 false
+    crossorigin: anonymous           
 # Donate plugin configurations
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Donation/
 # donates:
