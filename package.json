@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "hexo generate && echo '{\"version\": \"$(git rev-parse --short HEAD)\"}' > public/version.json",
+    "build": "hexo clean && hexo generate && echo {\"version\": \"$(git rev-parse --short HEAD)\"} > public/version.json",
     "clean": "hexo clean",
     "deploy": "hexo deploy",
     "server": "hexo server",
