@@ -257,6 +257,11 @@ body {
     backdrop-filter: blur(5px);
 }
 
+// 使右侧栏与导航栏保持距离
+.column.column-right.is-sticky {
+  top: 5rem !important; 
+}
+
 /* 以下为扩宽卡片 */
 @media screen and (min-width: 1280px)  // 对应 Bulma 的 $widescreen
   .container
