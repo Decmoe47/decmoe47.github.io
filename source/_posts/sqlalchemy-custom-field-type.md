@@ -1,8 +1,13 @@
 ---
 categories:
-  - [编程, Python, sqlalchemy]
-  - [编程, Python, sqlmodel]
+  - - 编程
+    - Python
+    - sqlalchemy
+  - - 编程
+    - Python
+    - sqlmodel
 title: sqlalchemy自定义字段类型
+abbrlink: 557ae48e
 ---
 
 代码示例：

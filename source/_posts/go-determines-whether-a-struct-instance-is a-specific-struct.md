@@ -1,7 +1,9 @@
 ---
 categories:
-  - [编程, Go]
+  - - 编程
+    - Go
 title: go判断struct实例是不是哪个具体的struct
+abbrlink: b5dd8765
 ---
 
 代码示例：

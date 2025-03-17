@@ -1,8 +1,13 @@
 ---
 categories:
-  - [编程, Go, 字符串]
-  - [编程, Go, zerolog]
+  - - 编程
+    - Go
+    - 字符串
+  - - 编程
+    - Go
+    - zerolog
 title: go zerolog打印json值内的换行符不起作用——原始字符串转字符串字面量
+abbrlink: 2b8a55e6
 ---
 
 在使用go zerolog打印json log时发现json值的换行符不起作用。探究源码的时候发现了 `strconv.Quote()` ：

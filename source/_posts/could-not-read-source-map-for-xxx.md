@@ -1,7 +1,9 @@
 ---
 categories:
-  - [编程, TypeScript]
+  - - 编程
+    - TypeScript
 title: Could not read source map for xxx
+abbrlink: 74b82b73
 ---
 
 在launch.json中添加：

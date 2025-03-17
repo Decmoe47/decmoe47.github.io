@@ -1,8 +1,11 @@
 ---
 categories:
-  - [编程, nodejs]
-  - [编程, Winston]
+  - - 编程
+    - nodejs
+  - - 编程
+    - Winston
 title: Winston无法在vscode打印
+abbrlink: f39e86a
 ---
 
 如果`launch.json`设置的是

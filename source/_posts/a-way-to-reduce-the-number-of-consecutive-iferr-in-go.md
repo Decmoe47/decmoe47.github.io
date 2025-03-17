@@ -1,7 +1,9 @@
 ---
 categories:
-  - [编程, Go]
+  - - 编程
+    - Go
 title: go缓解连续多个iferr的一个办法
+abbrlink: 4e4b2cf5
 ---
 
 开门见上，直接上代码：

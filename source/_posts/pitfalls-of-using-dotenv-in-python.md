@@ -1,7 +1,9 @@
 ---
 categories:
-  - [编程, Python]
+  - - 编程
+    - Python
 title: python使用dotenv的坑
+abbrlink: 43f1d3a6
 ---
 
 # 坑一：默认不会更新的配置项

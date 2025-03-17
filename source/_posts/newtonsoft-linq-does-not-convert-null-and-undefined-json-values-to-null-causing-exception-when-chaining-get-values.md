@@ -1,7 +1,10 @@
 ---
 categories:
-  - [编程, CSharp, NewtonsoftJson]
+  - - 编程
+    - CSharp
+    - NewtonsoftJson
 title: Newtonsoft.Json.Linq默认不会将json值为null和undefined转换为null导致链式取值时抛异常
+abbrlink: 31ec1d2c
 ---
 
 例如

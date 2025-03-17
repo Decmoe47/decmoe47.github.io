@@ -1,7 +1,10 @@
 ---
 categories:
-  - [编程, Go, zerolog]
+  - - 编程
+    - Go
+    - zerolog
 title: go zerolog输出到控制台和文件使用不同的最低level
+abbrlink: 21cbbb83
 ---
 
 只需实现zerolog的`LevelWriter`接口（[zerolog/writer.go at d894f123bc5c2a887c95e90218b9410563141d67 · rs/zerolog · GitHub](https://github.com/rs/zerolog/blob/d894f123bc5c2a887c95e90218b9410563141d67/writer.go#L15-L18)）即可。

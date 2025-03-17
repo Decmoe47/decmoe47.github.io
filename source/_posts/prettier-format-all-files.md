@@ -1,7 +1,9 @@
 ---
 categories:
-  - [编程, TypeScript]
+  - - 编程
+    - TypeScript
 title: prettier格式化所有文件
+abbrlink: 18a4d588
 ---
 
 ```shell
