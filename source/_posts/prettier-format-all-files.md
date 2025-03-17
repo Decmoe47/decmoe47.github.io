@@ -3,6 +3,7 @@ categories:
   - - 编程
     - TypeScript
 title: prettier格式化所有文件
+date: 2025-03-16
 abbrlink: 18a4d588
 ---
 

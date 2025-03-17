@@ -3,6 +3,7 @@ categories:
   - - 编程
     - Go
 title: go如何实现抽象类和抽象方法，父类方法调用子类实现的方法
+date: 2025-03-16
 abbrlink: 27d41c70
 ---
 

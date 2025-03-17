@@ -5,6 +5,7 @@ categories:
   - - 应用程序
     - GoLand
 title: 解决Goland换主题但代码看起来五颜六色太乱的问题
+date: 2025-03-16
 abbrlink: 6dd17169
 ---
 

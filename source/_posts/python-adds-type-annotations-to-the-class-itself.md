@@ -3,6 +3,7 @@ categories:
   - - 编程
     - Python
 title: Python为类自身添加类型注解
+date: 2025-03-16
 abbrlink: '944e0939'
 ---
 

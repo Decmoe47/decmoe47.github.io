@@ -5,6 +5,7 @@ categories:
   - - 编程
     - CICD
 title: go通过github action自动部署到服务器
+date: 2025-03-16
 abbrlink: daf4284d
 ---
 

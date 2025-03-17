@@ -3,6 +3,7 @@ categories:
   - - 编程
     - Go
 title: go判断struct实例是不是哪个具体的struct
+date: 2025-03-16
 abbrlink: b5dd8765
 ---
 

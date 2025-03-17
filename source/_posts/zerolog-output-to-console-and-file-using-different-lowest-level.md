@@ -4,6 +4,7 @@ categories:
     - Go
     - zerolog
 title: go zerolog输出到控制台和文件使用不同的最低level
+date: 2025-03-16
 abbrlink: 21cbbb83
 ---
 

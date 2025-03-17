@@ -3,6 +3,7 @@ categories:
   - - 编程
     - Go
 title: go缓解连续多个iferr的一个办法
+date: 2025-03-16
 abbrlink: 4e4b2cf5
 ---
 

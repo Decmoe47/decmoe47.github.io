@@ -7,6 +7,7 @@ categories:
     - Go
     - zerolog
 title: go zerolog打印json值内的换行符不起作用——原始字符串转字符串字面量
+date: 2025-03-16
 abbrlink: 2b8a55e6
 ---
 

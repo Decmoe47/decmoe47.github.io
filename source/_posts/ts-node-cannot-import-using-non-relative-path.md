@@ -4,6 +4,7 @@ categories:
     - TypeScript
     - ts-node
 title: ts-node无法使用非相对路径导入
+date: 2025-03-16
 abbrlink: 55865af
 ---
 

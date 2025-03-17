@@ -3,6 +3,7 @@ categories:
   - - 编程
     - Python
 title: python使用dotenv的坑
+date: 2025-03-16
 abbrlink: 43f1d3a6
 ---
 

@@ -4,6 +4,7 @@ categories:
     - TypeScript
     - ts-node
 title: Typescript使用ts-node报错Could not find a declaration file for module
+date: 2025-03-16
 abbrlink: a8432bc8
 ---
 
