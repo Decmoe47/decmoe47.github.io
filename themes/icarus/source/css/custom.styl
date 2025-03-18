@@ -49,7 +49,7 @@ body {
 // 使右侧栏与导航栏保持距离
 @media screen and (min-width: 1088px)
     .column.column-right.is-sticky
-        top: 5rem !important; 
+        top: 5rem !important;
 
 @media screen and (min-width: 769px) and (max-width: 1087px)
     .column.column-right.is-sticky
@@ -61,6 +61,18 @@ body {
     .navbar-main
         backdrop-filter: blur(5px)
         -webkit-backdrop-filter: blur(5px) // 兼容 Safari
+
+// 前后文章导航样式变更
+.article-nav-prev, .article-nav-next 
+    @extend .card
+    padding: 10px 15px
+    background: rgba(255, 255, 255, 0.8) !important
+    backdrop-filter: blur(3px) !important
+    -webkit-backdrop-filter: blur(3px)
+    color: #4A4A4A !important
+
+.post-navigation
+    gap: 10px;
 
 // 卡片圆角
 .card {
