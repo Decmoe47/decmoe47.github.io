@@ -104,7 +104,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: icarus
+theme: butterfly
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -113,8 +113,9 @@ deploy:
   repo: https://github.com/Decmoe47/decmoe47.github.io.git
   branch: main
 
-excerpt:
-  depth: 1
-  excerpt_excludes: []
-  more_excludes: []
-  hideWholePostExcerpts: true
+# hexo-generator-searchdb
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
