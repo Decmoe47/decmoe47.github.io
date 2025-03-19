@@ -20,41 +20,14 @@ body {
 
 // 导航栏
 .navbar {
-    position: fixed  // 固定在页面顶部
-    width: 100%
-    top: 0
-    z-index: 9999;  // 置顶
     background: rgba(255, 255, 255, 0.8) // 白色半透明（深色主题可用 rgba(0,0,0,0.5)）
     backdrop-filter: blur(10px) // 高斯模糊
     -webkit-backdrop-filter: blur(10px) // 兼容 Safari
 }
 
-// 导航栏和卡片顶部之间留空
-@media screen and (min-width: 1088px)
-    .section
-        margin-top: 45px
-
-@media screen and (min-width: 769px) and (max-width: 1087px)
-    .section
-        margin-top: 100px
-
-@media screen and (max-width: 768px)
-    .section
-        margin-top: 120px
-
 .navbar-menu {
     background-color: transparent
 }
-
-// 使右侧栏与导航栏保持距离
-@media screen and (min-width: 1088px)
-    .column.column-right.is-sticky
-        top: 5rem !important;
-
-@media screen and (min-width: 769px) and (max-width: 1087px)
-    .column.column-right.is-sticky
-        top: 9rem !important; 
-
 
 // 移动端减少模糊
 @media screen and (max-width: 768px)
@@ -74,9 +47,15 @@ body {
 .post-navigation
     gap: 10px;
 
-// 卡片圆角
 .card {
-    border-radius: 8px;
+    border-radius: 8px;   // 圆角
+
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out; // 添加平滑过渡效果
+
+    &:hover {
+        box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2), 0px 2px 6px rgba(0, 0, 0, 0.15); // 鼠标悬停时增强阴影
+    }
 }
 
 // 页脚高斯模糊
@@ -100,25 +79,25 @@ body {
 // 宽度对应的值参见base.styl
 @media screen and (min-width: 1472px)
   .container
-    max-width: 1472px !important
-    width: 1472px !important
-
-@media screen and (min-width: 1280px) and (max-width: 1471px)
-  .container
     max-width: 1280px !important
     width: 1280px !important
 
-@media screen and (min-width: 1088px) and (max-width: 1279px)
+@media screen and (min-width: 1280px) and (max-width: 1471px)
   .container
     max-width: 1088px !important
     width: 1088px !important
 
-@media screen and (min-width: 900px) and (max-width: 1087px)
+@media screen and (min-width: 1088px) and (max-width: 1279px)
   .container
     max-width: 900px !important
     width: 900px !important
 
-@media screen and (min-width: 769px) and (max-width: 900px)
+@media screen and (min-width: 900px) and (max-width: 1087px)
+  .container
+    max-width: 769px !important
+    width: 769px !important
+
+@media screen and (min-width: 769px) and (max-width: 899px)
   .container
     max-width: 769px !important
     width: 769px !important

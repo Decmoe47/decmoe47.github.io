@@ -219,10 +219,10 @@ widgets:
         position: right
         type: recent_posts
     # Categories widget configurations
-    -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: right
-        type: categories
+    # -
+    #     # Where should the widget be placed, left sidebar or right sidebar
+    #     position: right
+    #     type: categories
     # -
     #     # Where should the widget be placed, left sidebar or right sidebar
     #     position: left
