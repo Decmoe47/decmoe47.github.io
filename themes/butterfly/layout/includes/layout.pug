@@ -4,6 +4,7 @@
 - var hideAside = !theme.aside.enable || page.aside === false ? 'hide-aside' : ''
 - var pageType = globalPageType === 'post' ? 'post' : 'page'
 - pageType = page.type ? pageType + ' type-' + page.type : pageType
+- var accruatePageType = page.path.split('/')[0].replace(/\.html$/, '')
 
 doctype html
 html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside)
@@ -30,7 +31,7 @@ html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside
 
       - const footerBg = theme.footer_img
       - const footer_bg = footerBg ? footerBg === true ? bg_img : getBgPath(footerBg) : ''
-      footer#footer(style=footer_bg)
+      footer#footer(style=footer_bg class='footer ' + accruatePageType)
         !=partial('includes/footer', {}, {cache: true})
 
     include ./rightside.pug

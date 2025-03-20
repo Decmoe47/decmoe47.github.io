@@ -165,3 +165,165 @@ Cannot read properties of undefined (reading 'forEach')
     at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
 ```
 在网上和Butterfly issues/disscussions上找了好久都没找到相关回答，十分苦闷。后来再次搜“hexo怎么添加分类页面”时发现，有些文章里并没有加上 `layout: "tags"` ，我就猜测是不是这个导致的。结果删了下后，还真是这个原因。
+
+## 自定义头图和页脚图的图片位置
+
+通过F12得知背景图是通过 `background-image` 属性添加的，那么就能够通过 `background-position` 来改变图片位置。
+
+由于我给分类、标签等不同页面都设置了不同的图，因此想要针对性设置不一样的位置，单纯通过inject自定义css里直接改对应元素（例如下面头图对应元素的 `page-header` ）不行，因为每个页面都是一样的名字。而不知道为什么父元素只在分类和标签区分了class，但在归档就和首页一样都是 `page` ，因此也没法通过父元素类来区分页面。
+
+![](https://blog47.oss-cn-hangzhou.aliyuncs.com/img/20250320184744643.png)
+
+一开始的设想是通过inject一个js来直接if判断下页面路径然后改position。但后来发现会出现卡顿的情况，同时如果还在js里强制覆盖了别的图的话就会先闪现下原来的图然后再变成新图。这说明inject bottom的话是butterfly渲染后执行的。但选择inject head的话抢在渲染前获取不到对应元素，也不行。
+
+后来想到只能通过修改源码的方式侵入式实现了。首先是修改整体layout的源码：
+
+```pug
+//- themes\butterfly\layout\includes\layout.pug
+
+- var globalPageType = getPageType(page, is_home)
+- var htmlClassHideAside = theme.aside.enable && theme.aside.hide ? 'hide-aside' : ''
+- page.aside = globalPageType === 'archive' ? theme.aside.display.archive: globalPageType === 'category' ? theme.aside.display.category : globalPageType === 'tag' ? theme.aside.display.tag : page.aside
+- var hideAside = !theme.aside.enable || page.aside === false ? 'hide-aside' : ''
+- var pageType = globalPageType === 'post' ? 'post' : 'page'
+- pageType = page.type ? pageType + ' type-' + page.type : pageType
+- var accruatePageType = page.path.split('/')[0].replace(/\.html$/, '')     //- 这里添加了变量
+
+doctype html
+html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside)
+  head
+    include ./head.pug
+  body
+    !=partial('includes/loading/index', {}, {cache: true})
+
+    if theme.background
+      #web_bg(style=getBgPath(theme.background))
+
+    !=partial('includes/sidebar', {}, {cache: true})
+
+    #body-wrap(class=pageType)
+      include ./header/index.pug
+
+      main#content-inner.layout(class=hideAside)
+        if body
+          div!= body
+        else
+          block content
+          if theme.aside.enable && page.aside !== false
+            include widget/index.pug
+
+      - const footerBg = theme.footer_img
+      - const footer_bg = footerBg ? footerBg === true ? bg_img : getBgPath(footerBg) : ''
+      footer#footer(style=footer_bg class='footer ' + accruatePageType)     //- 这里为footer添加了class
+        !=partial('includes/footer', {}, {cache: true})
+
+    include ./rightside.pug
+    include ./additional-js.pug
+```
+然后修改头图的源码：
+
+```pug
+//- themes\butterfly\layout\includes\header\index.pug
+-
+  const returnTopImg = img => img !== false ? img || theme.default_top_img : false
+  const isFixedClass = theme.nav.fixed ? ' fixed' : ''
+  var top_img = false
+  let headerClassName = 'not-top-img'
+  var bg_img = ''
+
+if !theme.disable_top_img && page.top_img !== false
+  case globalPageType
+    when 'post'
+      - top_img = page.top_img || page.cover || theme.default_top_img
+    when 'page'
+      - top_img = page.top_img || theme.default_top_img
+    when 'tag'
+      - top_img = theme.tag_per_img && theme.tag_per_img[page.tag] || returnTopImg(theme.tag_img)
+    when 'category'
+      - top_img = theme.category_per_img && theme.category_per_img[page.category] || returnTopImg(theme.category_img)
+    when 'home'
+      - top_img = returnTopImg(theme.index_img)
+    when 'archive'
+      - top_img = returnTopImg(theme.archive_img)
+    default
+      - top_img = page.top_img || theme.default_top_img
+
+  if top_img !== false
+    - bg_img = getBgPath(top_img)
+    - headerClassName = globalPageType === 'home' ? 'full_page' : globalPageType === 'post' ? 'post-bg' : 'not-home-page'
+
+header#page-header(class=`${headerClassName + isFixedClass + ' ' + accruatePageType}` style=bg_img)   //- 这里修改了class
+  include ./nav.pug
+  if top_img !== false
+    if globalPageType === 'post'
+      include ./post-info.pug
+    else if globalPageType === 'home'
+      #site-info
+        h1#site-title=config.title
+        if theme.subtitle.enable
+          - var loadSubJs = true
+          #site-subtitle
+            span#subtitle
+        if theme.social
+          #site_social_icons
+            !=partial('includes/header/social', {}, {cache: true})
+      #scroll-down
+        i.fas.fa-angle-down.scroll-down-effects
+    else
+      #page-site-info
+        h1#site-title=page.title || page.tag || page.category
+  else
+    //- improve seo
+    if globalPageType !== 'post'
+      h1.title-seo=page.title || page.tag || page.category || config.title
+```
+
+这样，头图和页尾对应的元素的class就能带上当前路径的第一段，比如 `tags/abc/index.html` 获取到 `tags` 部分，同时针对首页 `/index.html` 直接获取到 `index` 的字符串。然后就能在自定义的css（inject到head）里针对性设置背景图和位置了！（css inject方式参见网上教程）
+
+```styl
+// source\css\custom.styl
+
+.not-home-page
+  background-position-y 15% !important
+
+.not-home-page.archives
+  background-position-y: 50% !important
+
+.not-home-page.categories
+  background-image: url("/img/category_img.jpg") !important
+  background-position-y: 20% !important
+
+.not-home-page.tags
+  background-image: url("/img/tag_img.jpg") !important
+  background-position-y: 20% !important
+
+.not-home-page.about
+  background-image: url("/img/about_img.jpg") !important
+  background-position-y: 55% !important
+
+.post-bg.p
+  background-position-y 15% !important
+
+.footer.index
+  background-image: url("/img/home_img.jpg") !important
+  background-position-y: 95% !important
+
+.footer.archives
+  background-image: url("/img/archive_img.jpg") !important
+  background-position-y: 90% !important
+
+.footer.categories
+  background-image: url("/img/category_img.jpg") !important
+  background-position-y: 55% !important
+
+.footer.tags
+  background-image: url("/img/tag_img.jpg") !important
+  background-position-y: 80% !important
+
+.footer.about
+  background-image: url("/img/about_img.jpg") !important
+  background-position-y: 90% !important
+
+```
+
+题外话：真不明白为什么butterfly只能给具体分类/标签页设自定义头图选项，但却不给分类/标签列表页设自定义头图的选项。

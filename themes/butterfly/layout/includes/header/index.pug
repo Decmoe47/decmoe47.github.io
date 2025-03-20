@@ -26,7 +26,7 @@ if !theme.disable_top_img && page.top_img !== false
     - bg_img = getBgPath(top_img)
     - headerClassName = globalPageType === 'home' ? 'full_page' : globalPageType === 'post' ? 'post-bg' : 'not-home-page'
 
-header#page-header(class=`${headerClassName + isFixedClass}` style=bg_img)
+header#page-header(class=`${headerClassName + isFixedClass + ' ' + accruatePageType}` style=bg_img)
   include ./nav.pug
   if top_img !== false
     if globalPageType === 'post'

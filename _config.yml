@@ -37,6 +37,7 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
+  - 404.html
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -119,3 +120,13 @@ search:
   field: post
   content: true
   format: html
+
+extend:
+  inject:
+    bottom: |
+      <script>
+        window.ButterflyOptions = {
+          topImgPosition: "<%= config.top_img_position || '50% 50%' %>"
+        };
+      </script>
+      <script src="/js/change_top_img_position.js"></script>
