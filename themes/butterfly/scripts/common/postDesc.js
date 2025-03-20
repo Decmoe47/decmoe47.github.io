@@ -4,6 +4,7 @@ const { stripHTML, truncate } = require('hexo-util')
 
 // Truncates the given content to a specified length, removing HTML tags and replacing newlines with spaces.
 const truncateContent = (content, length) => {
+  content = content.replace(/<figure\s+class="highlight\s+[^"]*"[^>]*>[\s\S]*?<\/figure>/gi, ' （详细代码请查看正文） ')
   return truncate(stripHTML(content), { length, separator: ' ' }).replace(/\n/g, ' ')
 }
 

@@ -224,6 +224,7 @@ html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside
 
 ```pug
 //- themes\butterfly\layout\includes\header\index.pug
+
 -
   const returnTopImg = img => img !== false ? img || theme.default_top_img : false
   const isFixedClass = theme.nav.fixed ? ' fixed' : ''
@@ -416,3 +417,69 @@ giscus:
     data-theme: noborder_light
     data-lang: zh-CN
 ```
+
+## 文章列表页的摘要会显示一长串数字
+
+![](https://blog47.oss-cn-hangzhou.aliyuncs.com/img/20250320225043930.png)
+
+其原因是摘要的生成方式是直接把文章的html里进行了截取：
+
+```js
+// themes\butterfly\scripts\common\postDesc.js
+
+const { stripHTML, truncate } = require('hexo-util')
+
+// Truncates the given content to a specified length, removing HTML tags and replacing newlines with spaces.
+const truncateContent = (content, length) => {
+  return truncate(stripHTML(content), { length, separator: ' ' }).replace(/\n/g, ' ')     // 这一行就是
+}
+
+// Generates a post description based on the provided data and theme configuration.
+const postDesc = (data, hexo) => {
+  const { description, content, postDesc } = data
+
+  if (postDesc) return postDesc
+
+  const { length, method } = hexo.theme.config.index_post_content
+
+  if (method === false) return
+
+  let result
+  switch (method) {
+    case 1:
+      result = description
+      break
+    case 2:
+      result = description || truncateContent(content, length)
+      break
+    default:
+      result = truncateContent(content, length)
+  }
+
+  data.postDesc = result
+  return result
+}
+```
+
+而正文里的代码块左边的行号则被当成正文内容也算进摘要里了。
+
+![](https://blog47.oss-cn-hangzhou.aliyuncs.com/img/20250320225302279.png)
+
+这个问题有人提过issue（[[Bug]: 在文章内使用代码块后主页会显示123456.... · Issue #1045 · jerryc127/hexo-theme-butterfly](https://github.com/jerryc127/hexo-theme-butterfly/issues/1045)），但作者摆烂了。
+
+我的解决方法是，代码块部分的有着对应的标签和class，那么就能正则表达式替换掉。
+
+![](https://blog47.oss-cn-hangzhou.aliyuncs.com/img/20250320225455705.png)
+
+`postDesc.js` 修改如下：
+
+```js
+const truncateContent = (content, length) => {
+  content = content.replace(/<figure\s+class="highlight\s+[^"]*"[^>]*>[\s\S]*?<\/figure>/gi, ' （详细代码请查看正文） ')      // 这里替换了
+  return truncate(stripHTML(content), { length, separator: ' ' }).replace(/\n/g, ' ')
+}
+```
+
+将整个代码块换成一个相对常见的纯文字提示，对于阅读者来说也合理。
+
+![](https://blog47.oss-cn-hangzhou.aliyuncs.com/img/20250320225701575.png)

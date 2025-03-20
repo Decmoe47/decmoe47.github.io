@@ -182,7 +182,7 @@ index_layout: 3
 index_post_content:
   method: 3
   # If you set method to 2 or 3, the length need to config
-  length: 300
+  length: 500
 
 # --------------------------------------
 # Post Settings
@@ -407,7 +407,7 @@ anchor:
   # When you scroll, the URL will update according to header id.
   auto_update: false
   # Click the headline to scroll and update the anchor
-  click_to_scroll: false
+  click_to_scroll: true
 
 photofigcaption: false
 
