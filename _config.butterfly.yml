@@ -621,16 +621,15 @@ giscus:
   category_id: DIC_kwDOKkY7bM4CoIKV
   light_theme: light
   dark_theme: dark
-  js:
+  js: 
   option:
-    mapping: og:title
-    strict: true
-    reactionsEnabled: true
-    emitMetadata: false
-    inputPosition: bottom
-    theme: noborder_light
-    lang: zh-CN
-    lazy: true
+    data-mapping: og:title
+    data-strict: true
+    data-reactions-enabled: true
+    data-emit-metadata: false
+    data-input-position: bottom
+    data-theme: noborder_light
+    data-lang: zh-CN
 
 # Remark42
 # https://remark42.com/docs/configuration/frontend/
@@ -785,8 +784,8 @@ preloader:
   # 1. fullpage-loading
   # 2. pace (progress bar)
   source: 2
-  # pace theme (see https://codebyzach.github.io/pace/)
-  pace_css_url: https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/minimal.min.css
+  # pace theme (see https://codebyzach.github.io/pace/ and https://cdn.jsdelivr.net/npm/pace-js/)
+  pace_css_url: https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css
 
 # Page Transition
 enter_transitions: true

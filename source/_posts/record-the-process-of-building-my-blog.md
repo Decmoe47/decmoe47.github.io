@@ -327,3 +327,92 @@ header#page-header(class=`${headerClassName + isFixedClass + ' ' + accruatePageT
 ```
 
 题外话：真不明白为什么butterfly只能给具体分类/标签页设自定义头图选项，但却不给分类/标签列表页设自定义头图的选项。
+
+## Giscus的option配置不起作用
+
+测试评论下后，发现discussions那边并没有按照配置里那样标题取 `og:title` 。原本我的配置写法：
+
+```yaml
+# _config_butterfly.yml
+
+giscus:
+  repo: Decmoe47/decmoe47.github.io
+  repo_id: （省略）
+  category_id: （省略）
+  light_theme: light
+  dark_theme: dark
+  js:
+  option:
+    mapping: og:title
+    strict: true
+    reactions_enabled: true
+    emit_metadata: false
+    input_position: bottom
+    theme: noborder_light
+    lang: zh-CN
+    lazy: true
+```
+
+在看了源码之后才知道，原来option部分的key不会帮你转下划线或者驼峰，也不会给你加上 `data-` ，而是原样写进 `<script>` 里。
+
+```pug
+//- themes\butterfly\layout\includes\third-party\comments\giscus.pug
+
+- const { use, lazyload } = theme.comments
+- const { repo, repo_id, category_id, light_theme, dark_theme, js, option } = theme.giscus
+- const giscusUrl = js || 'https://giscus.app/client.js'
+- const giscusOriginUrl = new URL(giscusUrl).origin
+
+script.
+  (() => {
+    const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+    const option = !{JSON.stringify(option)}
+
+    const getGiscusTheme = theme => theme === 'dark' ? '!{dark_theme}' : '!{light_theme}'
+
+    const createScriptElement = config => {
+      const ele = document.createElement('script')
+      Object.entries(config).forEach(([key, value]) => {
+        ele.setAttribute(key, value)
+      })
+      return ele
+    }
+
+    const loadGiscus = (el = document, key) => {
+      const mappingConfig = isShuoshuo
+        ? { 'data-mapping': 'specific', 'data-term': key }
+        : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+      const giscusConfig = {
+        src: '!{giscusUrl}',
+        'data-repo': '!{repo}',
+        'data-repo-id': '!{repo_id}',
+        'data-category-id': '!{category_id}',
+        'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+        'data-reactions-enabled': '1',
+        crossorigin: 'anonymous',
+        async: true,
+        ...option,
+        ...mappingConfig
+      }
+```
+
+所以正确的配置写法是：
+
+```yaml
+giscus:
+  repo: Decmoe47/decmoe47.github.io
+  repo_id: （省略）
+  category_id: （省略）
+  light_theme: light
+  dark_theme: dark
+  js: 
+  option:
+    data-mapping: og:title
+    data-strict: true
+    data-reactions-enabled: true
+    data-emit-metadata: false
+    data-input-position: bottom
+    data-theme: noborder_light
+    data-lang: zh-CN
+```
