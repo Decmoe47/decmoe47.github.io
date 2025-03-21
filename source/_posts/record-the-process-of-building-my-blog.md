@@ -35,7 +35,7 @@ toc: true
 
 ## 评论插件
 
-评论插件并没有什么复杂的，只是个人想推荐Giscus而已。在 [Icarus用户指南 - 用户评论插件 - Icarus](https://ppoffice.github.io/hexo-theme-icarus/Plugins/Comment/icarus%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97-%E7%94%A8%E6%88%B7%E8%AF%84%E8%AE%BA%E6%8F%92%E4%BB%B6/) 列出的一众评论插件里，当年用的是utterances，可惜现在已经停更许久，而他的精神继承者Giscus从利用github issues改为利用github discussions，焕然一新。
+评论插件并没有什么复杂的，只是个人想推荐Giscus而已。当年用的是utterances，可惜现在已经停更许久，而他的精神继承者Giscus从利用github issues改为利用github discussions，焕然一新。
 
 当然其他插件也有不错的，只是个人不喜欢要填邮箱的评论方式，也不想开放匿名评论，想来想去要求登录github账号是最好的办法了。
 
