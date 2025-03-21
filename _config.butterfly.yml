@@ -785,7 +785,7 @@ preloader:
   # 2. pace (progress bar)
   source: 2
   # pace theme (see https://codebyzach.github.io/pace/ and https://cdn.jsdelivr.net/npm/pace-js/)
-  pace_css_url: https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css
+  pace_css_url: https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/yellow/pace-theme-flash.css
 
 # Page Transition
 enter_transitions: true
