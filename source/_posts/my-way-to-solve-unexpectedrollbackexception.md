@@ -3,16 +3,16 @@ categories:
   - - 编程
     - Java
     - Spring
-title: 记一次UnexceptedRollbackException解决过程
+title: 记一次UnexpectedRollbackException解决过程
 abbrlink: 955282ec
 date: 2025-12-01 00:00:00
 ---
 
 项目内有一个api方法（称之为 `ServiceA.methodA()` ）需要调用一个共通service里的方法（称之为 `CommonService.methodB()` ），然后由于业务需求需要catch住 `CommonService.methodB()` 的异常并返回response。
 
-由于项目在config里通过切面配置了对于所有的 `@Service` 都设置了默认事务为REQUIRED，并且设置了对所有异常都回滚（通过 `TransactionInterceptor` 和 `NameMatchTransactionAttributeSource` ），导致如果直接使用 `CommonService.methodB()` 的话就会因为spring的机制导致抛出UnexceptedRollbackException。
+由于项目在config里通过切面配置了对于所有的 `@Service` 都设置了默认事务为REQUIRED，并且设置了对所有异常都回滚（通过 `TransactionInterceptor` 和 `NameMatchTransactionAttributeSource` ），导致如果直接使用 `CommonService.methodB()` 的话就会因为spring的机制导致抛出UnexpectedRollbackException。
 
-这个机制具体来说，抛出异常时spring会检测到并将当前事务内部的 `rollbackOnly` 这样一个flag设为true。但是又因为catch住了异常，导致最后结束方法提交事务时spring发现这个flag为true却仍然要提交，于是兜底性的回滚了并抛出UnexceptedRollbackException。
+这个机制具体来说，抛出异常时spring会检测到并将当前事务内部的 `rollbackOnly` 这样一个flag设为true。但是又因为catch住了异常，导致最后结束方法提交事务时spring发现这个flag为true却仍然要提交，于是兜底性的回滚了并抛出UnexpectedRollbackException。
 
 于是我想到了新建事务执行，而项目内正好有一个空壳方法 `Helper.execute(Suppiler)` 上面加了REQUIRES_NEW，只需代入方法即可。
 
@@ -24,7 +24,7 @@ catch (Exception e) {
 }
 ```
 
-但测试后发现仍然还是会抛出UnexceptedRollbackException。这就要具体分析整个流程了：
+但测试后发现仍然还是会抛出UnexpectedRollbackException。这就要具体分析整个流程了：
 
 1. Api (`ServiceA`) 调用 `Helper.execute()`，此时环境是 Tx1，对应拦截器（指 `TransactionInterceptor`  ）是拦截器1（用的是 `NameMatchTransactionAttributeSource` ）。
 2. `Helper` 上有 `@Service` ，拦截器2介入（用的是 `NameMatchTransactionAttributeSource` ）：
@@ -154,7 +154,7 @@ result = Helper.execute(() -> {
     4. 判定：“你让我提交一个明明标记了回滚的事务？”
     5. 结果：抛出 `UnexpectedRollbackException`。
 
-如果要验证也很简单，在外层再套一个try catch然后打印堆栈即可发现`Helper.execute()`会抛出个UnexceptedRollbackException。
+如果要验证也很简单，在外层再套一个try catch然后打印堆栈即可发现`Helper.execute()`会抛出个UnexpectedRollbackException。
 
 ---
 
@@ -171,7 +171,7 @@ result = Helper.execute(() -> {
 });
 ```
 
-这个方法设的rollback-only并非和事务管理器自动设的rollback-only是同一个，前者在源码里称为`localRollbackOnly`，后者是`globalRollbackOnly`。而源码中会先判断如果`localRollbackOnly`为true的话就直接回滚，不会抛UnexceptedRollbackException。
+这个方法设的rollback-only并非和事务管理器自动设的rollback-only是同一个，前者在源码里称为`localRollbackOnly`，后者是`globalRollbackOnly`。而源码中会先判断如果`localRollbackOnly`为true的话就直接回滚，不会抛UnexpectedRollbackException。
 
 这个代码在 `AbstractPlatformTransactionManager.commit()` 里：
 
@@ -235,9 +235,9 @@ if (result.hasException()) {
 String data = result.getData();
 ```
 
-但是要注意的是，不能把catch写在 `transactionTemplate.execute` 里面，否则内部的事务仍然会和前面一样把rollbackOnly设成true然后正常结束试图commit，结果导致UnexceptedRollbackException。
+但是要注意的是，不能把catch写在 `transactionTemplate.execute` 里面，否则内部的事务仍然会和前面一样把rollbackOnly设成true然后正常结束试图commit，结果导致UnexpectedRollbackException。
 
-为什么这个catch写在 `transactionTemplate.execute` 外面了却没有之前那样抛UnexceptedRollbackException呢？主要还是因为它没有前面那么多层拦截器切面干涉：
+为什么这个catch写在 `transactionTemplate.execute` 外面了却没有之前那样抛UnexpectedRollbackException呢？主要还是因为它没有前面那么多层拦截器切面干涉：
 
 1. Api (`ServiceA`) 调用 `Helper.execute()`，此时环境是 Tx1，对应拦截器是拦截器1（用的是 `NameMatchTransactionAttributeSource` ）。
 2. `Helper.execute` 上有 `@Service` ，拦截器2介入（用的是 `NameMatchTransactionAttributeSource` ），同时加入 Tx1。（此时它在监控 Tx1）
