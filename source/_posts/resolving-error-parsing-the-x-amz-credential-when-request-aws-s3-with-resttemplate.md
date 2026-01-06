@@ -16,70 +16,70 @@ date: 2026-01-06 00:00:00
 
 ```java
 // RestTemplate.java
-	
-	@Override
-	public <T> ResponseEntity<T> exchange(String url, HttpMethod method,
-			@Nullable HttpEntity<?> requestEntity, Class<T> responseType, Object... uriVariables)
-			throws RestClientException {
+    
+@Override
+public <T> ResponseEntity<T> exchange(String url, HttpMethod method,
+        @Nullable HttpEntity<?> requestEntity, Class<T> responseType, Object... uriVariables)
+        throws RestClientException {
 
-		RequestCallback requestCallback = httpEntityCallback(requestEntity, responseType);
-		ResponseExtractor<ResponseEntity<T>> responseExtractor = responseEntityExtractor(responseType);
-		return nonNull(execute(url, method, requestCallback, responseExtractor, uriVariables));
-	}
-	
-	...
-	
-	@Override
-	@Nullable
-	public <T> T execute(String uriTemplate, HttpMethod method, @Nullable RequestCallback requestCallback,
-			@Nullable ResponseExtractor<T> responseExtractor, Object... uriVariables) throws RestClientException {
+    RequestCallback requestCallback = httpEntityCallback(requestEntity, responseType);
+    ResponseExtractor<ResponseEntity<T>> responseExtractor = responseEntityExtractor(responseType);
+    return nonNull(execute(url, method, requestCallback, responseExtractor, uriVariables));
+}
 
-		URI url = getUriTemplateHandler().expand(uriTemplate, uriVariables);
-		return doExecute(url, uriTemplate, method, requestCallback, responseExtractor);
-	}
+...
+
+@Override
+@Nullable
+public <T> T execute(String uriTemplate, HttpMethod method, @Nullable RequestCallback requestCallback,
+        @Nullable ResponseExtractor<T> responseExtractor, Object... uriVariables) throws RestClientException {
+
+    URI url = getUriTemplateHandler().expand(uriTemplate, uriVariables);
+    return doExecute(url, uriTemplate, method, requestCallback, responseExtractor);
+}
 ```
 
 ```java
 // DefaultUriBuilderFactory.java
 
-	@Override
-	public URI expand(String uriTemplate, Object... uriVars) {
-		return uriString(uriTemplate).build(uriVars);
-	}
-	
-	...
-	
-	private class DefaultUriBuilder implements UriBuilder {
-	
-		...
-	
-		@Override
-		public URI build(Object... uriVars) {
-			if (ObjectUtils.isEmpty(uriVars) && !CollectionUtils.isEmpty(defaultUriVariables)) {
-				return build(Collections.emptyMap());
-			}
-			if (encodingMode.equals(EncodingMode.VALUES_ONLY)) {
-				uriVars = UriUtils.encodeUriVariables(uriVars);
-			}
-			UriComponents uric = this.uriComponentsBuilder.build().expand(uriVars);
-			return createUri(uric);
-		}
-		
-		...
-	}
+@Override
+public URI expand(String uriTemplate, Object... uriVars) {
+    return uriString(uriTemplate).build(uriVars);
+}
+
+...
+
+private class DefaultUriBuilder implements UriBuilder {
+
+    ...
+
+    @Override
+    public URI build(Object... uriVars) {
+        if (ObjectUtils.isEmpty(uriVars) && !CollectionUtils.isEmpty(defaultUriVariables)) {
+            return build(Collections.emptyMap());
+        }
+        if (encodingMode.equals(EncodingMode.VALUES_ONLY)) {
+            uriVars = UriUtils.encodeUriVariables(uriVars);
+        }
+        UriComponents uric = this.uriComponentsBuilder.build().expand(uriVars);
+        return createUri(uric);
+    }
+    
+    ...
+    }
 ```
 
 ```java
 // UriUtils.java
 
-	public static Object[] encodeUriVariables(Object... uriVariables) {
-		return Arrays.stream(uriVariables)
-				.map(value -> {
-					String stringValue = (value != null ? value.toString() : "");
-					return encode(stringValue, StandardCharsets.UTF_8);
-				})
-				.toArray();
-	}
+public static Object[] encodeUriVariables(Object... uriVariables) {
+    return Arrays.stream(uriVariables)
+            .map(value -> {
+                String stringValue = (value != null ? value.toString() : "");
+                return encode(stringValue, StandardCharsets.UTF_8);
+            })
+            .toArray();
+}
 ```
 
 可以看到最终来到了 `build()` 这里，而其中 `encodeUriVariables` 就是做了编码的操作。
@@ -96,13 +96,13 @@ ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, nul
 ```java
 // RestTemplate.java
 
-	@Override
-	@Nullable
-	public <T> T execute(URI url, HttpMethod method, @Nullable RequestCallback requestCallback,
-			@Nullable ResponseExtractor<T> responseExtractor) throws RestClientException {
+@Override
+@Nullable
+public <T> T execute(URI url, HttpMethod method, @Nullable RequestCallback requestCallback,
+        @Nullable ResponseExtractor<T> responseExtractor) throws RestClientException {
 
-		return doExecute(url, null, method, requestCallback, responseExtractor);
-	}
+    return doExecute(url, null, method, requestCallback, responseExtractor);
+}
 ```
 
 另外，这个问题似乎在WebClient中也有：[https://stackoverflow.com/questions/74389361/upload-file-to-aws-s3-using-presigned-url-via-spring-webclient-error-the-crede](https://stackoverflow.com/questions/74389361/upload-file-to-aws-s3-using-presigned-url-via-spring-webclient-error-the-crede)
