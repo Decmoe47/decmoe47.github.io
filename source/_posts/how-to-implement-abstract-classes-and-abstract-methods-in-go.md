@@ -14,31 +14,37 @@ package main
 
 import "fmt"
 
-type IFace interface {
-    check() bool
-    do()
+type MyInterface interface {
+	Check() bool
+	Do()
 }
 
 type Abstract struct {
-    IFace
+	MyInterface
 }
 
-func (a *Abstract) add() {
-    fmt.Println(a.check())
+func (a *Abstract) Do() {
+	fmt.Println(a.Check())
 }
 
 type Impl struct {
-    Abstract
+	*Abstract
 }
 
-func (i *Impl) checkId() bool {
-    return true
+func NewImpl() *Impl {
+	a := &Abstract{}
+	i := &Impl{a}
+	a.MyInterface = i
+	return i
+}
+
+func (i *Impl) Check() bool {
+	return true
 }
 
 func main() {
-    i := &Impl{}
-    i.IFace = i // 这一步必不可少，否则会panic
-    i.add()
+	impl := NewImpl()
+	impl.Do()
 }
 ```
 
